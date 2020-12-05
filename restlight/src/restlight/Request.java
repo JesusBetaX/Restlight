@@ -1,5 +1,6 @@
 package restlight;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 
 public class Request {
@@ -13,7 +14,7 @@ public class Request {
   public static final String DEFAULT_METHOD = "GET";
   
   /** Url de nuestra request. */
-  HttpUrl url;
+  String url;
   
   /** Metodo de la request: OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE. */
   String method = DEFAULT_METHOD;
@@ -53,22 +54,29 @@ public class Request {
       isCanceled = true;
     }
   }
-
-  public HttpUrl getUrl() {
-    return url;
-  }
-  public void setUrl(String url) {
-    setUrl(new HttpUrl(url));
-  }
-  public void setUrl(HttpUrl url) {
-    this.url = url;
-  }
-   
+  
   public String getMethod() {
     return method;
   }
   public void setMethod(String method) {
-    this.method = method;
+    this.method = method.toUpperCase();
+  }
+  
+  public String getUrl() {
+    return url;
+  }
+  public void setUrl(String url) {
+    this.url = url;
+  }
+  
+  public void request(String method, String url, RequestBody body) {
+    setMethod(method);
+    setUrl(url);
+    setBody(body);
+  }
+  
+  public void request(String method, String url) {
+    request(method, url, null);
   }
   
   public Headers getHeaders() {
@@ -116,12 +124,21 @@ public class Request {
     return method.equals("POST") || method.equals("PUT");
   }
 
+  public String urlParams() throws IOException {
+    if (!requiresRequestBody(method) && body != null) {
+      if (body instanceof FormBody) {
+        FormBody formBody = (FormBody) body;
+        return formBody.toUrl(url, charset);
+      }
+    }
+    return url;
+  }
+  
   @Override public String toString() {
     return "Request{" + "url=" + url + ", method=" + method + ", headers=" 
             + headers + ", tag=" + tag + ", timeoutMs=" + timeoutMs 
             + ", charset=" + charset + ", isCanceled=" + isCanceled + '}';
   }
-  
 
   public static abstract class Parse<T> extends Request implements Callback<T> {
     /** Intefaz que escuchara la respuesta. */

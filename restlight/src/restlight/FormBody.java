@@ -50,6 +50,17 @@ public class FormBody extends RequestBody {
     }
   }
   
+  public String encodedUrlParams(Charset chrst) throws IOException {
+    ByteArrayOutputStream baos = null;
+    try {
+      baos = IOUtils.arrayOutputStream();
+      writeTo(baos, chrst);
+      return new String(baos.toByteArray(), chrst);
+    } finally {
+      IOUtils.closeQuietly(baos);
+    }
+  }
+  
   public int size() {
     return keys.size();
   }
@@ -67,5 +78,27 @@ public class FormBody extends RequestBody {
   public Object value(int index) {
     return values.get(index);
   }
+ 
+  public String toUrl(String url, Charset charset) {
+    if (size() == 0) return url;
+    
+    try {
+      String encodedParams = encodedUrlParams(charset);
+      int len = encodedParams.length();
+      if (len > 0) {
+        return new StringBuilder(url.length() + 1 + len)
+              .append(url)
+              .append(url.contains("?") ? '&' : '?')
+              .append(encodedParams)
+              .toString();
+      }
+    } catch(IOException ignore) {
+      // empty
+    }
+    return url;
+  }
   
+  @Override public String toString() {
+    return toUrl("", Request.DEFAULT_ENCODING);
+  }
 }

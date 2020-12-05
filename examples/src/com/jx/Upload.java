@@ -13,12 +13,10 @@ public class Upload {
   String run() throws Exception { 
     MultipartBody body = new MultipartBody()
             .addParam("nombre", "Elizabéth Magaña")
-            .addFile("img", new File("C:\\Users\\jesus\\Pictures\\420089-Kycb_1600x1200.jpg"));
+            .addFile("img", new File("C:\\Users\\jesus\\Pictures\\0_y9hPeM6fo2v1ZA31.png"));
     
     Request request = new Request();
-    request.setUrl("http://127.0.0.1/test.php");
-    request.setMethod("POST");
-    request.setBody(body);
+    request.request("POST", "http://127.0.0.1/test.php", body);
 
     try (ResponseBody response = stack.execute(request)) {
       return response.string(request.getCharset());

@@ -1,6 +1,6 @@
 package com.jx;
 
-import restlight.HttpUrl;
+import restlight.FormBody;
 import restlight.HttpUrlStack;
 import restlight.Request;
 import restlight.ResponseBody;
@@ -10,12 +10,11 @@ public class Delete {
   HttpUrlStack stack = new HttpUrlStack();
 
   String run() throws Exception {
-    HttpUrl url = new HttpUrl("http://127.0.0.1/test.php")
-            .addQueryParameter("id", 101010);
+    FormBody body = new FormBody()
+            .add("id", 101010);
 
     Request request = new Request();
-    request.setUrl(url); 
-    request.setMethod("DELETE");
+    request.request("DELETE", "http://127.0.0.1/test.php", body);
 
     try (ResponseBody response = stack.execute(request)) {
       return response.string(request.getCharset());

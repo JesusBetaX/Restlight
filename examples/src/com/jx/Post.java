@@ -16,9 +16,7 @@ public class Post {
             .add("soltera", false);
     
     Request request = new Request();
-    request.setUrl("http://127.0.0.1/test.php");
-    request.setMethod("POST");
-    request.setBody(body);
+    request.request("POST", "http://127.0.0.1/test.php", body);
 
     try (ResponseBody response = stack.execute(request)) {
       return response.string(request.getCharset());

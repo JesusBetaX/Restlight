@@ -15,8 +15,7 @@ Restlight rest = Restlight.get();
 String run() throws Exception {
   String url = "http://weather.livedoor.com/forecast/webservice/json/v1?city=130010";
   Request request = new Request();
-  request.setUrl(url);
-  request.setMethod("GET");
+  request.request("GET", url);
 
   try (ResponseBody response = rest.execute(request)) {
     return response.string(request.getCharset());
@@ -33,9 +32,7 @@ String run() throws Exception {
           .add("soltera", false);
     
   Request request = new Request();
-  request.setUrl("http://127.0.0.1/test.php");
-  request.setMethod("POST");
-  request.setBody(body);
+  request.request("POST", "http://127.0.0.1/test.php", body);
 
   try (ResponseBody response = rest.execute(request)) {
     return response.string(request.getCharset());
@@ -46,12 +43,11 @@ String run() throws Exception {
 ### DELETE
 ```java
 String run() throws Exception {
-  HttpUrl url = new HttpUrl("http://127.0.0.1/test.php")
-          .addQueryParameter("id", 101010);
+  FormBody body = new FormBody()
+            .add("id", 101010);
 
   Request request = new Request();
-  request.setUrl(url);
-  request.setMethod("DELETE");
+  request.request("DELETE", "http://127.0.0.1/test.php", body);
 
   try (ResponseBody response = rest.execute(request)) {
     return response.string(request.getCharset());
@@ -64,8 +60,7 @@ String run() throws Exception {
 File run() throws Exception {
   String downloadPath = "C:\\Users\\Jesus\\Desktop\\restlight.jar";
   Request.Parse<File> request = new DownloadRequest(downloadPath);
-  request.setUrl("https://github.com/JesusBetaX/Restlight/raw/master/dist/restlight.jar");
-  request.setMethod("GET");
+  request.request("GET", "https://github.com/JesusBetaX/Restlight/raw/master/dist/restlight.jar");
 
   return rest.executeAndParse(request);
 }
@@ -79,9 +74,7 @@ String run() throws Exception {
           .addFile("img", new File("C:\\Users\\jesus\\Pictures\\420089-Kycb_1600x1200.jpg"));
     
   Request request = new Request();
-  request.setUrl("http://127.0.0.1/test.php");
-  request.setMethod("POST");
-  request.setBody(body);
+  request.request("POST", "http://127.0.0.1/test.php", body);
 
   try (ResponseBody response = rest.execute(request)) {
     return response.string(request.getCharset());
