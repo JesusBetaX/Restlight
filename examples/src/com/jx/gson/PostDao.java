@@ -24,8 +24,7 @@ public class PostDao {
 
   public Call<Post[]> getPosts() {
     GsonRequest<Post[]> request = GsonRequest.of(gson, Post[].class);
-    request.setUrl("https://kylewbanks.com/rest/posts.json");
-    request.setMethod("GET");
+    request.request("GET", "https://kylewbanks.com/rest/posts.json");
 
     Restlight restlight = Restlight.get();
     return restlight.newCall(request);
@@ -35,9 +34,7 @@ public class PostDao {
     GsonBody<Post> body = new GsonBody<Post>(gson, p);
     
     StringRequest request = new StringRequest();
-    request.setMethod("POST");
-    request.setUrl("http://127.0.0.1/test.php");
-    request.setBody(body);
+    request.request("POST", "http://127.0.0.1/test.php", body);
     
     Restlight restlight = Restlight.get();
     return restlight.newCall(request);
