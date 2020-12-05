@@ -1,6 +1,5 @@
 package restlight;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 
 public class Request {
@@ -13,11 +12,11 @@ public class Request {
   /** Metodo por default. */
   public static final String DEFAULT_METHOD = "GET";
   
-  /** Url de nuestra request. */
-  String url;
-  
   /** Metodo de la request: OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE. */
   String method = DEFAULT_METHOD;
+  
+  /** Url de nuestra request. */
+  String url;
   
   /** Lista de encabezados adicionales de HTTP para esta peticion. */
   Headers headers;
@@ -124,7 +123,7 @@ public class Request {
     return method.equals("POST") || method.equals("PUT");
   }
 
-  public String urlParams() throws IOException {
+  public String urlParams() {
     if (!requiresRequestBody(method) && body != null) {
       if (body instanceof FormBody) {
         FormBody formBody = (FormBody) body;
@@ -135,10 +134,11 @@ public class Request {
   }
   
   @Override public String toString() {
-    return "Request{" + "url=" + url + ", method=" + method + ", headers=" 
-            + headers + ", tag=" + tag + ", timeoutMs=" + timeoutMs 
+    return "Request{" + "method=" + method + ", url=" + url + ", headers=" 
+            + headers + ", body=" + body + ", tag=" + tag + ", timeoutMs=" + timeoutMs 
             + ", charset=" + charset + ", isCanceled=" + isCanceled + '}';
   }
+  
 
   public static abstract class Parse<T> extends Request implements Callback<T> {
     /** Intefaz que escuchara la respuesta. */
