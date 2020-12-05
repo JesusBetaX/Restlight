@@ -37,6 +37,17 @@ public class HttpUrl {
     return paths.get(index);
   }
   
+  public String urlPaths(Charset chrst) throws IOException {
+    if (paths.isEmpty()) return url;
+    StringBuilder sb = new StringBuilder(url);
+    if (!url.endsWith("/")) sb.append('/');
+    for (int i = 0; i < paths.size(); i++) {
+      if (i > 0) sb.append('/');
+      sb.append(URLEncoder.encode(path(i), chrst.name()));
+    }
+    return sb.toString();
+  }
+  
   public int size() {
     return keys.size();
   }
@@ -58,18 +69,7 @@ public class HttpUrl {
     Object value = value(index);
     return value == null ? "" : value.toString();
   }
-  
-  public String urlPaths(Charset chrst) throws IOException {
-    if (paths.isEmpty()) return url;
-    StringBuilder sb = new StringBuilder(url);
-    if (!url.endsWith("/")) sb.append('/');
-    for (int i = 0; i < paths.size(); i++) {
-      if (i > 0) sb.append('/');
-      sb.append(URLEncoder.encode(path(i), chrst.name()));
-    }
-    return sb.toString();
-  }
-  
+    
   public String encodedUrlParams(Charset chrst) throws IOException {
     StringBuilder sb = new StringBuilder();
     for (int i = 0, size = size(); i < size; i++) {
@@ -94,7 +94,7 @@ public class HttpUrl {
       String encodedParams = encodedUrlParams(charset);
 
       if (encodedParams.length() > 0) 
-          return new StringBuilder(rurl.length() + 1 + encodedParams.length())
+        return new StringBuilder(rurl.length() + 1 + encodedParams.length())
             .append(rurl)
             .append(rurl.endsWith("?") ? '&' : '?')
             .append(encodedParams).toString();
