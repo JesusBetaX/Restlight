@@ -132,8 +132,7 @@ public class Dao {
 
   public Call<Post[]> getPosts() {
     Request.Parse<Post[]> request = GsonRequest.of(gson, Post[].class);
-    request.setUrl("https://kylewbanks.com/rest/posts.json");
-    request.setMethod("GET");
+    request.request("GET", "https://kylewbanks.com/rest/posts.json");
     
     return Restlight.get().newCall(request);
   }
