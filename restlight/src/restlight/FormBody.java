@@ -45,8 +45,7 @@ public class FormBody extends RequestBody {
       if (i > 0) out.write('&');
       out.write(URLEncoder.encode(key(i), chrst.name()).getBytes());
       out.write('=');
-      Object value = value(i);
-      out.write(URLEncoder.encode(value == null ? "" : value.toString(), chrst.name()).getBytes());
+      out.write(URLEncoder.encode(valueStr(i), chrst.name()).getBytes());
     }
   }
   
@@ -78,27 +77,17 @@ public class FormBody extends RequestBody {
   public Object value(int index) {
     return values.get(index);
   }
- 
-  public String toUrl(String url, Charset charset) {
-    if (size() == 0) return url;
-    
-    try {
-      String encodedParams = encodedUrlParams(charset);
-      int len = encodedParams.length();
-      if (len > 0) {
-        return new StringBuilder(url.length() + 1 + len)
-              .append(url)
-              .append(url.contains("?") ? '&' : '?')
-              .append(encodedParams)
-              .toString();
-      }
-    } catch(IOException ignore) {
-      // empty
-    }
-    return url;
-  }
   
+  public String valueStr(int index) {
+    Object value = value(index);
+    return value == null ? "" : value.toString();
+  }
+
   @Override public String toString() {
-    return toUrl("", Request.DEFAULT_ENCODING);
+    try {
+      return encodedUrlParams(Request.DEFAULT_ENCODING);
+    } catch(Exception e) {
+      return "";
+    }
   }
 }

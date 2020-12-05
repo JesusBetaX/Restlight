@@ -124,12 +124,11 @@ public class Request {
   }
 
   public String urlParams() {
-    if (!requiresRequestBody(method) && body != null) {
-      if (body instanceof FormBody) {
-        FormBody formBody = (FormBody) body;
-        return formBody.toUrl(url, charset);
-      }
-    }
+    if (!requiresRequestBody(method))
+      if (body != null)
+        if (body instanceof FormBody) 
+          return HttpUrl.toUrl(url, (FormBody)body, charset);
+    
     return url;
   }
   
