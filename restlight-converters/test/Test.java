@@ -15,7 +15,7 @@ public class Test {
     body.addFile("archivo", new byte[]{'H', 'O', 'L', 'A', ' ', 'M', 'U', 'N', 'D', 'O'}, "texto.txt");
     
     Request request = new Request();
-    request.request("POST", "http://127.0.0.1/test.php", body);
+    request.post("http://127.0.0.1/test.php", body);
     
     Restlight rest = Restlight.get();
     Request.Parse<JSON> parse = new JsonRequest();

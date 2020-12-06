@@ -13,9 +13,8 @@ Restlight rest = Restlight.get();
 ### GET
 ```java
 String run() throws Exception {
-  String url = "http://weather.livedoor.com/forecast/webservice/json/v1?city=130010";
   Request request = new Request();
-  request.request("GET", url);
+  request.get("http://weather.livedoor.com/forecast/webservice/json/v1?city=130010");
 
   try (ResponseBody response = rest.execute(request)) {
     return response.string(request.getCharset());
@@ -32,7 +31,7 @@ String run() throws Exception {
           .add("soltera", false);
     
   Request request = new Request();
-  request.request("POST", "http://127.0.0.1/test.php", body);
+  request.post("http://127.0.0.1/test.php", body);
 
   try (ResponseBody response = rest.execute(request)) {
     return response.string(request.getCharset());
@@ -47,7 +46,7 @@ String run() throws Exception {
             .add("id", 101010);
 
   Request request = new Request();
-  request.request("DELETE", "http://127.0.0.1/test.php", body);
+  request.delete("http://127.0.0.1/test.php", body);
 
   try (ResponseBody response = rest.execute(request)) {
     return response.string(request.getCharset());
@@ -60,7 +59,7 @@ String run() throws Exception {
 File run() throws Exception {
   String downloadPath = "C:\\Users\\Jesus\\Desktop\\restlight.jar";
   Request.Parse<File> request = new DownloadRequest(downloadPath);
-  request.request("GET", "https://github.com/JesusBetaX/Restlight/raw/master/dist/restlight.jar");
+  request.get("https://github.com/JesusBetaX/Restlight/raw/master/dist/restlight.jar");
 
   return rest.executeAndParse(request);
 }
@@ -74,7 +73,7 @@ String run() throws Exception {
           .addFile("img", new File("C:\\Users\\jesus\\Pictures\\420089-Kycb_1600x1200.jpg"));
     
   Request request = new Request();
-  request.request("POST", "http://127.0.0.1/test.php", body);
+  request.post("http://127.0.0.1/test.php", body);
 
   try (ResponseBody response = rest.execute(request)) {
     return response.string(request.getCharset());
@@ -132,7 +131,7 @@ public class Dao {
 
   public Call<Post[]> getPosts() {
     Request.Parse<Post[]> request = GsonRequest.of(gson, Post[].class);
-    request.request("GET", "https://kylewbanks.com/rest/posts.json");
+    request.get("https://kylewbanks.com/rest/posts.json");
     
     return Restlight.get().newCall(request);
   }

@@ -14,7 +14,7 @@ public class Delete {
             .add("id", 101010);
 
     Request request = new Request();
-    request.request("DELETE", "http://127.0.0.1/test.php", body);
+    request.delete("http://127.0.0.1/test.php", body);
 
     try (ResponseBody response = stack.execute(request)) {
       return response.string(request.getCharset());

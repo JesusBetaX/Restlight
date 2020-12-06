@@ -16,7 +16,7 @@ public class Upload {
             .addFile("img", new File("C:\\Users\\jesus\\Pictures\\0_y9hPeM6fo2v1ZA31.png"));
     
     Request request = new Request();
-    request.request("POST", "http://127.0.0.1/test.php", body);
+    request.post("http://127.0.0.1/test.php", body);
 
     try (ResponseBody response = stack.execute(request)) {
       return response.string(request.getCharset());

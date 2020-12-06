@@ -9,9 +9,8 @@ public class Get {
   HttpUrlStack stack = new HttpUrlStack();
 
   String run() throws Exception {
-    String url = "http://weather.livedoor.com/forecast/webservice/json/v1?city=130010";
     Request request = new Request();
-    request.request("GET", url);
+    request.get("http://weather.livedoor.com/forecast/webservice/json/v1?city=130010");
 
     try (ResponseBody response = stack.execute(request)) {
       return response.string(request.getCharset());
