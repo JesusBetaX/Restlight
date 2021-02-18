@@ -12,8 +12,8 @@ public class Post {
             .add("edad", 22)
             .add("soltera", false);
     
-    Request request = new Request();
-    request.post("http://127.0.0.1/test.php", body);
+    Request request = new Request(
+            "POST", "http://127.0.0.1/test.php", body);
 
     try (ResponseBody response = request.execute()) {
       return response.string(request.getCharset());

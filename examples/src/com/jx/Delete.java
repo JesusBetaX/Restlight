@@ -10,8 +10,8 @@ public class Delete {
     FormBody body = new FormBody()
             .add("id", 101010);
 
-    Request request = new Request();
-    request.delete("http://127.0.0.1/test.php", body);
+    Request request = new Request(
+            "DELETE", "http://127.0.0.1/test.php", body);
 
     try (ResponseBody response = request.execute()) {
       return response.string(request.getCharset());

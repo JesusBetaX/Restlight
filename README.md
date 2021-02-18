@@ -8,8 +8,8 @@ Restlight es una librería **HTTP** para Android y Java, que facilita la creaci�
 ### GET
 ```java
 String run() throws Exception {
-  Request request = new Request();
-  request.get("http://weather.livedoor.com/forecast/webservice/json/v1?city=130010");
+  Request request = new Request(
+          "GET", "http://weather.livedoor.com/forecast/webservice/json/v1?city=130010");
 
   try (ResponseBody response = request.execute()) {
     return response.string(request.getCharset());
@@ -25,8 +25,8 @@ String run() throws Exception {
           .add("edad", 22)
           .add("soltera", false);
     
-  Request request = new Request();
-  request.post("http://127.0.0.1/test.php", body);
+  Request request = new Request(
+          "POST", "http://127.0.0.1/test.php", body);
 
   try (ResponseBody response = request.execute()) {
     return response.string(request.getCharset());
@@ -40,8 +40,8 @@ String run() throws Exception {
   FormBody body = new FormBody()
             .add("id", 101010);
 
-  Request request = new Request();
-  request.delete("http://127.0.0.1/test.php", body);
+  Request request = new Request(
+            "DELETE", "http://127.0.0.1/test.php", body);
 
   try (ResponseBody response = request.execute()) {
     return response.string(request.getCharset());
@@ -67,8 +67,8 @@ String run() throws Exception {
           .addParam("nombre", "Elizabéth Magaña")
           .addFile("img", new File("C:\\Users\\jesus\\Pictures\\420089-Kycb_1600x1200.jpg"));
     
-  Request request = new Request();
-  request.post("http://127.0.0.1/test.php", body);
+  Request request = new Request(
+          "POST", "http://127.0.0.1/test.php", body);
 
   try (ResponseBody response = request.execute()) {
     return response.string(request.getCharset());

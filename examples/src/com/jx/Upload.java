@@ -12,8 +12,8 @@ public class Upload {
             .addParam("nombre", "Elizabéth Magaña")
             .addFile("img", new File("C:\\Users\\jesus\\Pictures\\0_y9hPeM6fo2v1ZA31.png"));
     
-    Request request = new Request();
-    request.post("http://127.0.0.1/test.php", body);
+    Request request = new Request(
+            "POST", "http://127.0.0.1/test.php", body);
 
     try (ResponseBody response = request.execute()) {
       return response.string(request.getCharset());
