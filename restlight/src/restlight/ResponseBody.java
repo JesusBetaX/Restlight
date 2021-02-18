@@ -39,6 +39,10 @@ public class ResponseBody implements Closeable {
     return new String(data, charset);
   }
   
+  public String string() throws IOException {
+    return string(Request.DEFAULT_ENCODING);
+  }
+  
   public void writeTo(OutputStream out) throws IOException {
     try {
       IOUtils.copy(in, out);

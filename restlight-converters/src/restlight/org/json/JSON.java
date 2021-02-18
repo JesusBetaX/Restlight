@@ -1,4 +1,4 @@
-package restlight.json;
+package restlight.org.json;
 
 import org.json.JSONArray;
 import org.json.JSONException;

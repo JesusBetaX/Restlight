@@ -8,7 +8,6 @@ import com.google.gson.GsonBuilder;
 // import java.net.URL;
 // import restlight.BasicHttpStack;
 import restlight.Call;
-import restlight.Restlight;
 import restlight.StringRequest;
 import restlight.body.GsonBody;
 import restlight.request.GsonRequest;
@@ -26,8 +25,7 @@ public class PostDao {
     GsonRequest<Post[]> request = GsonRequest.of(gson, Post[].class);
     request.get("https://kylewbanks.com/rest/posts.json");
 
-    Restlight restlight = Restlight.get();
-    return restlight.newCall(request);
+    return request.newCall();
   }
   
   public Call<String> insert(Post p) {
@@ -36,8 +34,7 @@ public class PostDao {
     StringRequest request = new StringRequest();
     request.post("http://127.0.0.1/test.php", body);
     
-    Restlight restlight = Restlight.get();
-    return restlight.newCall(request);
+    return request.newCall();
   }
 
   //  BasicHttpStack stack = new BasicHttpStack() {  

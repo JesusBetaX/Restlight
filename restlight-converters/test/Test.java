@@ -2,7 +2,7 @@
 import restlight.MultipartBody;
 import restlight.Request;
 import restlight.Restlight;
-import restlight.json.JSON;
+import restlight.org.json.JSON;
 import restlight.request.JsonRequest;
 
 public class Test {   

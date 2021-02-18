@@ -1,14 +1,11 @@
 package com.jx;
 
 import java.io.File;
-import restlight.HttpUrlStack;
 import restlight.MultipartBody;
 import restlight.Request;
 import restlight.ResponseBody;
 
 public class Upload {
-
-  HttpUrlStack stack = new HttpUrlStack();
 
   String run() throws Exception { 
     MultipartBody body = new MultipartBody()
@@ -18,7 +15,7 @@ public class Upload {
     Request request = new Request();
     request.post("http://127.0.0.1/test.php", body);
 
-    try (ResponseBody response = stack.execute(request)) {
+    try (ResponseBody response = request.execute()) {
       return response.string(request.getCharset());
     }
   }

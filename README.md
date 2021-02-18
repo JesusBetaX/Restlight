@@ -4,11 +4,6 @@ Restlight es una librería **HTTP** para Android y Java, que facilita la creaci�
 
 ## Ejemplos
 
-Creamos un objeto para ejecutar las request.  
-Envíe sincrónicamente la solicitud y devuelva su respuesta.
-```java
-Restlight rest = Restlight.get();
-```
 
 ### GET
 ```java
@@ -16,7 +11,7 @@ String run() throws Exception {
   Request request = new Request();
   request.get("http://weather.livedoor.com/forecast/webservice/json/v1?city=130010");
 
-  try (ResponseBody response = rest.execute(request)) {
+  try (ResponseBody response = request.execute()) {
     return response.string(request.getCharset());
   }
 }
@@ -33,7 +28,7 @@ String run() throws Exception {
   Request request = new Request();
   request.post("http://127.0.0.1/test.php", body);
 
-  try (ResponseBody response = rest.execute(request)) {
+  try (ResponseBody response = request.execute()) {
     return response.string(request.getCharset());
   }
 }
@@ -48,7 +43,7 @@ String run() throws Exception {
   Request request = new Request();
   request.delete("http://127.0.0.1/test.php", body);
 
-  try (ResponseBody response = rest.execute(request)) {
+  try (ResponseBody response = request.execute()) {
     return response.string(request.getCharset());
   }
 }
@@ -61,7 +56,7 @@ File run() throws Exception {
   Request.Parse<File> request = new DownloadRequest(downloadPath);
   request.get("https://github.com/JesusBetaX/Restlight/raw/master/dist/restlight.jar");
 
-  return rest.executeAndParse(request);
+  return request.executeResult();
 }
 ```
 
@@ -75,7 +70,7 @@ String run() throws Exception {
   Request request = new Request();
   request.post("http://127.0.0.1/test.php", body);
 
-  try (ResponseBody response = rest.execute(request)) {
+  try (ResponseBody response = request.execute()) {
     return response.string(request.getCharset());
   }
 }
@@ -133,7 +128,7 @@ public class Dao {
     Request.Parse<Post[]> request = GsonRequest.of(gson, Post[].class);
     request.get("https://kylewbanks.com/rest/posts.json");
     
-    return Restlight.get().newCall(request);
+    return request.newCall(request);
   }
 }
 ```

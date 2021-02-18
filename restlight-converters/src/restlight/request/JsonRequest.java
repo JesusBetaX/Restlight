@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import restlight.Request;
 import restlight.ResponseBody;
-import restlight.json.JSON;
+import restlight.org.json.JSON;
 
 public class JsonRequest extends Request.Parse<JSON> {
   

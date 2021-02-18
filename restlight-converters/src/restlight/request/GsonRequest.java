@@ -10,6 +10,8 @@ import restlight.ResponseBody;
 
 public class GsonRequest<T> extends Request.Parse<T> {
 
+  private static Gson defaultGson = new Gson();
+    
   private final Gson gson;
   final TypeAdapter<T> adapter;
 
@@ -23,19 +25,26 @@ public class GsonRequest<T> extends Request.Parse<T> {
     this.gson = gson;
     this.adapter = adapter;
   }
-
+  
   public static <V> GsonRequest<V> of(Gson gson, Class<V> classOf) {
     return new GsonRequest<V>(gson, gson.getAdapter(classOf));
   }
   public static <V> GsonRequest<V> of(Class<V> classOf) {
-    return of(new Gson(), classOf);
+    return of(defaultGson, classOf);
   }
   
-  public static <V> GsonRequest<V> of(Gson gson, TypeToken<V> token) {
-    return new GsonRequest<V>(gson, gson.getAdapter(token));
+  public static <V> GsonRequest<V> of(Gson gson, TypeToken<V> type) {
+    return new GsonRequest<V>(gson, gson.getAdapter(type));
   }
-  public static <V> GsonRequest<V> of(TypeToken<V> token) {
-    return of(new Gson(), token);
+  public static <V> GsonRequest<V> of(TypeToken<V> type) {
+    return of(defaultGson, type);
+  }
+
+  public static Gson getDefaultGson() {
+    return defaultGson;
+  }
+  public static void setDefaultGson(Gson defaultGson) {
+    GsonRequest.defaultGson = defaultGson;
   }
 
   public final TypeAdapter<T> getAdapter() {
