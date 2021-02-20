@@ -36,9 +36,6 @@ public class Request {
   
   /** Valida si la request fue cancelada. */
   boolean isCanceled;
-  
-  /** Cola de peticiones al servidor. */
-  Restlight restlight = Restlight.get();
 
   public Request() {
   }
@@ -151,13 +148,6 @@ public class Request {
     this.tag = tag;
   }
 
-  public Restlight getRestlight() {
-    return restlight;
-  }
-
-  public void setRestlight(Restlight restlight) {
-    this.restlight = restlight;
-  }
   
   public static boolean requiresRequestBody(String method) {
     return method.equals("POST") || method.equals("PUT");
@@ -173,7 +163,7 @@ public class Request {
   }
   
   public ResponseBody execute() throws IOException {
-    return restlight.execute(this);
+    return Restlight.get().execute(this);
   }
   
   @Override public String toString() {
@@ -245,11 +235,11 @@ public class Request {
     }
     
     public T executeResult() throws Exception {
-      return restlight.executeAndParse(this);
+      return Restlight.get().executeAndParse(this);
     }
     
     public Call<T> newCall() {
-      return restlight.newCall(this);
+      return Restlight.get().newCall(this);
     }
   }
 }

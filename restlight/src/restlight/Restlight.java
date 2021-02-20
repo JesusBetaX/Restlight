@@ -34,10 +34,17 @@ public class Restlight implements HttpStack {
   }
   
   public static Restlight get() {
-    if (instance == null) {
+    if (instance == null) 
       instance = new Restlight(new HttpUrlStack());
-    }
+ 
     return instance;
+  }
+  
+  public static void set(Restlight restlight) {
+    if (instance != null) 
+        instance.stop();
+    
+    instance = restlight;
   }
   
   /**
@@ -137,7 +144,7 @@ public class Restlight implements HttpStack {
    * 
    * @return una respuesta para el tipo de petición realizada
    * 
-   * @throws java.lang.Exception si se produjo un problema al hablar con el
+   * @throws java.io.IOException si se produjo un problema al hablar con el
    * servidor
    */
   public ResponseBody execute(Request request) throws IOException {
