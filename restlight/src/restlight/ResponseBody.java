@@ -40,7 +40,7 @@ public class ResponseBody implements Closeable {
   }
   
   public String string() throws IOException {
-    return string(Request.DEFAULT_ENCODING);
+    return string(Charset.forName(contentEncoding));
   }
   
   public void writeTo(OutputStream out) throws IOException {
