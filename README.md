@@ -54,7 +54,7 @@ String run() throws Exception {
 File run() throws Exception {
   String downloadPath = "C:\\Users\\Jesus\\Desktop\\restlight.jar";
   Request.Parse<File> request = new DownloadRequest(downloadPath);
-  request.get("https://github.com/JesusBetaX/Restlight/raw/master/dist/restlight.jar");
+  request.req("GET", "https://github.com/JesusBetaX/Restlight/raw/master/dist/restlight.jar");
 
   return request.executeResult();
 }
@@ -126,9 +126,9 @@ public class Dao {
 
   public Call<Post[]> getPosts() {
     Request.Parse<Post[]> request = GsonRequest.of(gson, Post[].class);
-    request.get("https://kylewbanks.com/rest/posts.json");
+    request.req("GET", "https://kylewbanks.com/rest/posts.json");
     
-    return request.newCall(request);
+    return request.newCall();
   }
 }
 ```

@@ -23,7 +23,7 @@ public class PostDao {
 
   public Call<Post[]> getPosts() {
     GsonRequest<Post[]> request = GsonRequest.of(gson, Post[].class);
-    request.get("https://kylewbanks.com/rest/posts.json");
+    request.req("GET", "https://kylewbanks.com/rest/posts.json");
 
     return request.newCall();
   }
@@ -32,7 +32,7 @@ public class PostDao {
     GsonBody<Post> body = new GsonBody<Post>(gson, p);
     
     StringRequest request = new StringRequest();
-    request.post("http://127.0.0.1/test.php", body);
+    request.req("POST", "http://127.0.0.1/test.php", body);
     
     return request.newCall();
   }

@@ -121,7 +121,7 @@ public class Restlight implements HttpStack {
    * Cancela todas las peticiones en esta cola.
    */
   public synchronized void cancelAll() {
-    for (Request.Parse<?> request : networkQueue()) {
+    for (Request request : networkQueue()) {
       request.cancel();
     }
   }
@@ -130,7 +130,7 @@ public class Restlight implements HttpStack {
    * Cancela todas las peticiones de esta cola con la etiqueta dada.
    */
   public synchronized void cancelAll(final Object tag) {
-    for (Request.Parse<?> request : networkQueue()) {
+    for (Request request : networkQueue()) {
       if (request.getTag() == tag) {
         request.cancel();
       }

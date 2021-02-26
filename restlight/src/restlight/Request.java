@@ -54,27 +54,9 @@ public class Request {
     setBody(body);
   }
   
-  public void options(String url) { req("OPTIONS", url, null); }
-  public void options(String url, RequestBody body) { req("OPTIONS", url, body); }
-  
-  public void get(String url) { req("GET", url, null); }
-  public void get(String url, RequestBody body) { req("GET", url, body); }
-  
-  public void head(String url) { req("HEAD", url, null); }
-  public void head(String url, RequestBody body) { req("HEAD", url, body); }
-  
-  public void post(String url) { req("POST", url, null); }
-  public void post(String url, RequestBody body) { req("POST", url, body); }
-  
-  public void put(String url) { req("PUT", url, null); }
-  public void put(String url, RequestBody body) { req("PUT", url, body); }
-  
-  public void delete(String url) { req("DELETE", url, null); }
-  public void delete(String url, RequestBody body) { req("DELETE", url, body); }
-  
-  public void trace(String url) { req("TRACE", url, null); }
-  public void trace(String url, RequestBody body) { req("TRACE", url, body); }
-
+  public void req(String method, String url) {
+    req(method, url, null);
+  }
   
   /**
    * @return true si se cancelo la peticion.
@@ -164,6 +146,10 @@ public class Request {
   
   public ResponseBody execute() throws IOException {
     return Restlight.get().execute(this);
+  }
+  public <V> V execute(Request.Parse<V> req) throws Exception {
+    req.setRequest(this);
+    return req.executeResult();
   }
   
   @Override public String toString() {

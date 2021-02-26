@@ -49,7 +49,7 @@ public class RequestDispatcher extends Thread {
         if (request.isCanceled()) continue;
 
         // Procesa la request.
-        ResponseBody responseBody = request.execute();
+        ResponseBody responseBody = restlight.execute(request);
         
         // Si la petición ya estaba cancelada, no funciona la petición de la red.
         if (request.isCanceled()) {

@@ -51,9 +51,9 @@ public class ResponseBody implements Closeable {
     }
   }
   
-  <V> V parse(Request.Parse<V> request) throws Exception {
+  <V> V parse(Request.Parse<V> parse) throws Exception {
     try { 
-      return request.parseResponse(this);
+      return parse.parseResponse(this);
     } finally {
       close();
     }
