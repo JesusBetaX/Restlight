@@ -26,6 +26,9 @@ public class Sync {
     return request.newCall();
   }
     
+  /*
+   * Envíe sincrónicamente la solicitud y devuelva su respuesta.
+   */
   private void run() {
     Call<ResponseBody> insert = insert(
             "Elizabéth Magaña", 22, true);
