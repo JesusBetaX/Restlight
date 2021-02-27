@@ -76,6 +76,8 @@ String run() throws Exception {
 }
 ```
 
+
+## [SYNC ASYNC] 
 ### ASYNC
 ```
 Preparamos la solicitud
@@ -122,7 +124,6 @@ insert.execute(new Callback<ResponseBody>() {
 });
 ```
 
-## [SYNC ASYNC] 
 ### SYNC
 ```
 Envíe sincrónicamente la solicitud y devuelva su respuesta.
