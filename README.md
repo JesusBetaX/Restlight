@@ -77,7 +77,7 @@ String run() throws Exception {
 ```
 
 
-## [SYNC ASYNC] 
+## [Asíncrono y síncrono] 
 ### ASYNC
 ```
 Preparamos la solicitud
