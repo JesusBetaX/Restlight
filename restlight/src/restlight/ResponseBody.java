@@ -51,14 +51,6 @@ public class ResponseBody implements Closeable {
     }
   }
   
-  <V> V parse(Request.Parse<V> parse) throws Exception {
-    try { 
-      return parse.parseResponse(this);
-    } finally {
-      close();
-    }
-  }
-  
   @Override public void close() {
     if (!closed) {
       closed = Boolean.TRUE;

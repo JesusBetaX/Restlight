@@ -35,6 +35,8 @@ public class RequestDispatcher extends Thread {
     /*Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);*/
     while (true) {
       Request.Parse<?> request;
+      ResponseBody response = null;
+      
       try {
         // Toma y quita la peticion de la cola.
         request = restlight.networkQueue().take();
@@ -49,19 +51,22 @@ public class RequestDispatcher extends Thread {
         if (request.isCanceled()) continue;
 
         // Procesa la request.
-        ResponseBody responseBody = restlight.execute(request);
+        response = restlight.execute(request);
         
         // Si la petición ya estaba cancelada, no funciona la petición de la red.
-        if (request.isCanceled()) {
-          responseBody.close();
+        if (request.isCanceled()) 
           continue;
-        }
          
-        this.onResponse(request, responseBody.parse(request));
+        this.onResponse(request, request.parseResponse(response));
         
       } catch (Exception e) {
         // TODO: handle exception
         this.onFailure(request, e);
+      
+      } finally {
+        // Cerramos la respuesta.
+        if (response != null) 
+          response.close();
       }
     }
   }

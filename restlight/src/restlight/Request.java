@@ -159,20 +159,10 @@ public class Request {
   }
   
 
-  public static abstract class Parse<T> extends Request implements Callback<T> {
+  public static abstract class Parse<T> extends Request 
+          implements ResponseParse<T>, Callback<T> {
     /** Intefaz que escuchara la respuesta. */
     private Callback<T> callback;
-    
-    /**
-     * Convercion de la respuesta obtenida de la Red.
-     *
-     * @param response resultado obtenido.
-     *
-     * @return tipo generico
-     *
-     * @throws java.lang.Exception
-     */
-    public abstract T parseResponse(ResponseBody response) throws Exception;
 
     public Callback<T> getCallback() {
       return callback;

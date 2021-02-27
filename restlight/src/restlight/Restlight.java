@@ -151,8 +151,16 @@ public class Restlight implements HttpStack {
     return stack().execute(request);
   }
 
-  public <V> V executeAndParse(Request.Parse<V> parse) throws Exception {
-    return execute(parse).parse(parse);
+  public <V> V executeAndParse(Request.Parse<V> request) throws Exception {
+    ResponseBody response = null;
+    try {
+      response = execute(request);
+      return request.parseResponse(response);
+      
+    } finally {
+      if (response != null)
+        response.close();
+    }
   }
   
   public <V> V execute(Request request, Request.Parse<V> parse) throws Exception {
