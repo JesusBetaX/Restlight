@@ -65,8 +65,10 @@ public class RequestDispatcher extends Thread {
       
       } finally {
         // Cerramos la respuesta.
-        if (response != null) 
+        if (response != null) {
           response.close();
+          response = null;
+        }
       }
     }
   }
