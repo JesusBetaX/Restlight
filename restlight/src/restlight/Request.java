@@ -223,7 +223,7 @@ public class Request {
     }
     
     public T executeResult() throws Exception {
-      return Restlight.get().executeAndParse(this);
+      return Restlight.get().executeResult(this);
     }
     
     public Call<T> newCall() {
