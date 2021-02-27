@@ -79,9 +79,8 @@ String run() throws Exception {
 
 ## [Asíncrono y síncrono] 
 ### ASYNC
-```
+
 Preparamos la solicitud
-```
 
 ```java
 public Call<ResponseBody> insert(
@@ -99,10 +98,8 @@ public Call<ResponseBody> insert(
 }
 ```
 
-```
 Envía de manera asíncrona la petición y notifica a tu aplicación con un callback cuando una respuesta regresa. Ya que esta petición es asíncrona, Restligth maneja la ejecución en el hilo de fondo para que el hilo de la 
 UI principal no sea bloqueada o interfiera con esta.
-```
 
 ```java
 Call<ResponseBody> insert = insert(
@@ -123,9 +120,8 @@ insert.execute(new Callback<ResponseBody>() {
 ```
 
 ### SYNC
-```
+
 Envíe sincrónicamente la solicitud y devuelva su respuesta.
-```
 
 ```java
 Call<ResponseBody> insert = insert(
