@@ -12,7 +12,7 @@ String run() throws Exception {
           "GET", "http://weather.livedoor.com/forecast/webservice/json/v1?city=130010");
 
   try (ResponseBody response = request.execute()) {
-    return response.string(request.getCharset());
+    return response.string();
   }
 }
 ```
@@ -29,7 +29,7 @@ String run() throws Exception {
           "POST", "http://127.0.0.1/test.php", body);
 
   try (ResponseBody response = request.execute()) {
-    return response.string(request.getCharset());
+    return response.string();
   }
 }
 ```
@@ -44,7 +44,7 @@ String run() throws Exception {
             "DELETE", "http://127.0.0.1/test.php", body);
 
   try (ResponseBody response = request.execute()) {
-    return response.string(request.getCharset());
+    return response.string();
   }
 }
 ```
@@ -71,7 +71,7 @@ String run() throws Exception {
           "POST", "http://127.0.0.1/test.php", body);
 
   try (ResponseBody response = request.execute()) {
-    return response.string(request.getCharset());
+    return response.string();
   }
 }
 ```
