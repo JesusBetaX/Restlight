@@ -125,6 +125,7 @@ public class HttpUrlStack implements HttpStack {
     }
     
     ResponseBody response = body(conn);
+    response.request = request;
     response.code = responseCode;
     response.headers = Headers.of(conn.getHeaderFields());
     response.contentLength = conn.getContentLength();

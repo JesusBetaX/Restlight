@@ -22,4 +22,11 @@ public class HttpRequest extends Request.Parse<ResponseBody>{
   public ResponseBody parseResponse(ResponseBody response) throws Exception {
     return response;
   }
+
+  @Override
+  public ResponseBody doParse(ResponseBody response) throws Exception {
+    return parseResponse(response);
+  }
+  
+  
 }

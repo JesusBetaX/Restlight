@@ -155,11 +155,13 @@ public class Restlight implements HttpStack {
     ResponseBody response = null;
     try {
       response = execute(request);
-      return request.parseResponse(response);
+      return request.doParse(response);
       
-    } finally {
+    } catch(Exception e) {
       if (response != null)
         response.close();
+      
+      throw e;
     }
   }
   

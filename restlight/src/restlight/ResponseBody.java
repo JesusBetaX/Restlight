@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 import restlight.io.IOUtils;
 
 public class ResponseBody implements Closeable {
+  public Request request;
   public int code;  
   public Headers headers;
   public String contentEncoding;
@@ -40,7 +41,7 @@ public class ResponseBody implements Closeable {
   }
   
   public String string() throws IOException {
-    return string(Charset.forName(contentEncoding));
+    return string(request.charset);
   }
   
   public void writeTo(OutputStream out) throws IOException {
