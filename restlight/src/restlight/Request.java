@@ -164,6 +164,18 @@ public class Request {
     /** Intefaz que escuchara la respuesta. */
     private Callback<T> callback;
 
+    public Parse() {
+      super();
+    }
+
+    public Parse(String method, String url) {
+      super(method, url);
+    }
+
+    public Parse(String method, String url, RequestBody body) {
+      super(method, url, body);
+    }
+    
     public Callback<T> getCallback() {
       return callback;
     }
