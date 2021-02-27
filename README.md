@@ -122,6 +122,7 @@ insert.execute(new Callback<ResponseBody>() {
 });
 ```
 
+## [SYNC ASYNC] 
 ### SYNC
 ```
 Envíe sincrónicamente la solicitud y devuelva su respuesta.
