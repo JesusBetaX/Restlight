@@ -142,19 +142,24 @@ public class MultipartBody extends RequestBody {
     return addPart(Part.createFormData(name, filename, body));
   }
   
+  public MultipartBody addObject(String name, Object value) {
+    if (value == null) 
+      addParam(name, value);
+    else if (value instanceof File) 
+      addFile(name, (File) value);
+    else if (value instanceof Part) 
+      addPart((Part) value);
+    else if (value instanceof RequestBody) 
+      addBody(name, (RequestBody) value);
+    else
+      addParam(name, value);
+    
+    return this;
+  }
+  
   public MultipartBody addMap(Map<String, Object> map) {
     for (Map.Entry<String, Object> entry : map.entrySet()) {
-      Object value = entry.getValue();
-      if (value == null) 
-        addParam(entry.getKey(), value);
-      else if (value instanceof File) 
-        addFile(entry.getKey(), (File) value);
-      else if (value instanceof Part) 
-        addPart((Part) value);
-      else if (value instanceof RequestBody) 
-        addBody(entry.getKey(), (RequestBody) value);
-      else
-        addParam(entry.getKey(), value);
+      addObject(entry.getKey(), entry.getValue());
     }
     return this;
   }
