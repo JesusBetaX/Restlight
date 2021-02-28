@@ -27,6 +27,10 @@ public class HttpRequest extends Request.Parse<ResponseBody>{
   public ResponseBody doParse(ResponseBody response) throws Exception {
     return parseResponse(response);
   }
-  
-  
+
+  @Override
+  public void atTheEnd(ResponseBody result) {
+    super.atTheEnd(result);
+    result.close();
+  }
 }

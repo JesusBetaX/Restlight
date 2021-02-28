@@ -1,7 +1,6 @@
 package com.jx;
 
 import restlight.Call;
-import restlight.Callback;
 import restlight.FormBody;
 import restlight.HttpRequest;
 import restlight.ResponseBody;

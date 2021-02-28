@@ -194,6 +194,9 @@ public class Request {
       }
     }
     
+    public void atTheEnd(T result) {
+    }
+    
     public Callback<T> getCallback() {
       return callback;
     }

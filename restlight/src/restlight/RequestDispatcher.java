@@ -71,16 +71,16 @@ public class RequestDispatcher extends Thread {
   /**
    * Metodo que se encarga de liverar la respuesta obtenida de la conexión.
    */
-  @SuppressWarnings("rawtypes")
-  public void onResponse(final Callback callback, final Object response) {
+  public void onResponse(final Request.Parse request, final Object result) {
     restlight.executorDelivery().execute(new Runnable() {  
-      @SuppressWarnings("unchecked")
-      @Override
-      public void run() {
+      
+      @Override public void run() {
         try {
-          callback.onResponse(response);
+          request.onResponse(result);
         } catch (Exception error) {
-          callback.onFailure(error);
+          request.onFailure(error);
+        } finally {
+          request.atTheEnd(result);
         }
       }
     });
@@ -91,6 +91,7 @@ public class RequestDispatcher extends Thread {
    */
   public void onFailure(final Callback<?> callback, final Exception error) {
     restlight.executorDelivery().execute(new Runnable() {
+      
       @Override public void run() {
         callback.onFailure(error);
       }
