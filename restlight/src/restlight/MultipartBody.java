@@ -145,6 +145,8 @@ public class MultipartBody extends RequestBody {
         addParam(entry.getKey(), value);
       else if (value instanceof File) 
         addFile(entry.getKey(), (File) value);
+      else if (value instanceof Part) 
+        addPart((Part) value);
       else
         addParam(entry.getKey(), value);
     }
