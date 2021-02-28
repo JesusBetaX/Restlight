@@ -14,6 +14,7 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import restlight.io.IOUtils;
 
 public class FormBody extends RequestBody {
@@ -21,6 +22,13 @@ public class FormBody extends RequestBody {
   protected final List<String> keys = new ArrayList<String>();
   protected final List<Object> values = new ArrayList<Object>();
 
+  public FormBody() {
+  }
+
+  public FormBody(Map<String, Object> map) {
+    addMap(map);
+  } 
+  
   /**
    * @param charset
    * @return el tipo de contenido para POST o PUT.
@@ -67,6 +75,13 @@ public class FormBody extends RequestBody {
   public FormBody add(String key, Object value) {
     keys.add(key);
     values.add(value);
+    return this;
+  }
+  
+  public FormBody addMap(Map<String, Object> map) {
+    for (Map.Entry<String, Object> entry : map.entrySet()) {
+      add(entry.getKey(), entry.getValue());
+    }
     return this;
   }
 

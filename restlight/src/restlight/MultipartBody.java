@@ -13,6 +13,7 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import restlight.io.IOUtils;
 
 public class MultipartBody extends RequestBody {
@@ -32,14 +33,24 @@ public class MultipartBody extends RequestBody {
   protected final String boundary;
   
   
+  public MultipartBody(List<Part> parts, String boundary) {
+    this.parts = parts;
+    this.boundary = boundary;
+  }
+  
+  public MultipartBody(String boundary) {
+    this(new ArrayList<Part>(), boundary);
+  }
+  
   public MultipartBody() {
     this(Long.toOctalString(System.currentTimeMillis()));
   }
-
-  public MultipartBody(String boundary) {
-    this.parts = new ArrayList<Part>();
-    this.boundary = boundary;
-  }
+  
+  public MultipartBody(Map<String, Object> map) {
+    this();
+    addMap(map);
+  } 
+  
   
   public String boundary() {
     return boundary;
@@ -125,6 +136,19 @@ public class MultipartBody extends RequestBody {
   public MultipartBody addFile(String name, byte[] value, String filename) {
     RequestBody body = RequestBody.create("application/octet-stream", value, Boolean.FALSE);
     return addPart(Part.createFormData(name, filename, body));
+  }
+  
+  public MultipartBody addMap(Map<String, Object> map) {
+    for (Map.Entry<String, Object> entry : map.entrySet()) {
+      Object value = entry.getValue();
+      if (value == null) 
+        addParam(entry.getKey(), value);
+      else if (value instanceof File) 
+        addFile(entry.getKey(), (File) value);
+      else
+        addParam(entry.getKey(), value);
+    }
+    return this;
   }
 
   public List<Part> parts() {
