@@ -77,7 +77,7 @@ String run() throws Exception {
 ```
 
 
-## [Asíncrono y síncrono] 
+## [Llamadas asincrónicas y sincrónicas] 
 
 Preparamos la solicitud
 
@@ -97,7 +97,7 @@ public Call<ResponseBody> insert(
 }
 ```
 
-### ASYNC
+### Asíncrono
 
 Envía de manera asíncrona la petición y notifica a tu aplicación con un callback cuando una respuesta regresa. Ya que esta petición es asíncrona, Restligth maneja la ejecución en el hilo de fondo para que el hilo de la 
 UI principal no sea bloqueada o interfiera con esta.
@@ -107,6 +107,7 @@ Call<ResponseBody> insert = insert(
             "Elizabéth Magaña", 22, true);
     
 insert.execute(new Callback<ResponseBody>() {
+
     @Override
     public void onResponse(ResponseBody result) throws Exception {
         String str = result.string();
@@ -120,7 +121,7 @@ insert.execute(new Callback<ResponseBody>() {
 });
 ```
 
-### SYNC
+### Síncrono
 
 Envíe sincrónicamente la solicitud y devuelva su respuesta.
 
@@ -200,7 +201,9 @@ Envía de manera asíncrona la petición y notifica a tu aplicación con un call
 Dao dao = new Dao();
     
 Call<Post[]> call = dao.getPosts(); 
+
 call.execute(new Callback<Post[]>() {
+  
   @Override
   public void onResponse(Post[] result) throws Exception {
     List<Post> list = Arrays.asList(result);
@@ -208,6 +211,7 @@ call.execute(new Callback<Post[]>() {
       System.out.println(post.title);
     }
   }
+  
   @Override
   public void onFailure(Exception e) {
     e.printStackTrace(System.out);
