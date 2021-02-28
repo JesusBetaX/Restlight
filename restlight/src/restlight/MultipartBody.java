@@ -118,6 +118,10 @@ public class MultipartBody extends RequestBody {
     return this;
   }
   
+  public MultipartBody addBody(String name, RequestBody body) {
+    return addPart(Part.createFormData(name, body));
+  }
+  
   public MultipartBody addParam(String name, Object value) {
     String newValue = value == null ? "" : value.toString();
     RequestBody body = RequestBody.create("text/plain", newValue);
@@ -147,6 +151,8 @@ public class MultipartBody extends RequestBody {
         addFile(entry.getKey(), (File) value);
       else if (value instanceof Part) 
         addPart((Part) value);
+      else if (value instanceof RequestBody) 
+        addBody(entry.getKey(), (RequestBody) value);
       else
         addParam(entry.getKey(), value);
     }
