@@ -225,7 +225,7 @@ call.execute(new Callback<Post[]>() {
 [Se requiere restlight-converters.jar](https://github.com/JesusBetaX/Restlight/raw/master/dist/restlight-converters.jar)
 
 Para android no es necesario descar [org.json jar](https://github.com/stleary/JSON-java)
-Para otra plataforma java como java swing si es necesario.
+Para otras plataformas de java como java swing si es necesario.
 
 ```java
 public Call<JSON> insert(
