@@ -222,6 +222,11 @@ call.execute(new Callback<Post[]>() {
 ## [JSON](https://github.com/stleary/JSON-java)
 (https://www.json.org/json-en.html)
 
+[Se requiere restlight-converters.jar](https://github.com/JesusBetaX/Restlight/raw/master/dist/restlight-converters.jar)
+
+Para android no es necesario descar [org.json jar](https://github.com/stleary/JSON-java)
+Para otra plataforma java como java swing si es necesario.
+
 ```java
 public Call<JSON> insert(
     String nombre, int edad, boolean soltera) {
