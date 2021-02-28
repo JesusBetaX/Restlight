@@ -83,7 +83,7 @@ Preparamos la solicitud
 
 ```java
 public Call<ResponseBody> insert(
-          String nombre, int edad, boolean soltera) {
+    String nombre, int edad, boolean soltera) {
       
     FormBody body = new FormBody()
         .add("nombre", nombre)
@@ -218,6 +218,38 @@ call.execute(new Callback<Post[]>() {
   }
 });
 ```
+
+## [JSON](https://github.com/stleary/JSON-java)
+```java
+public Call<JSON> insert(
+    String nombre, int edad, boolean soltera) {
+      
+    FormBody body = new FormBody()
+        .add("nombre", nombre)
+        .add("edad", edad)
+        .add("soltera", soltera);
+
+    JsonRequest request = new JsonRequest(
+        "POST", "http://127.0.0.1/test.php", body);
+        
+    return request.newCall();
+}
+```
+
+```java
+Call<JSON> insert = insert(
+    "Elizabéth Magaña", 22, true);
+        
+try {
+    JSON result = insert.execute();
+    JSONObject json = result.getObject();
+    System.out.println(json.toString(1));
+            
+} catch (Exception e) {
+    e.printStackTrace();
+}
+```
+
 License
 =======
 
