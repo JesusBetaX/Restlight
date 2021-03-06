@@ -11,6 +11,8 @@ String run() throws Exception {
   Request request = new Request(
           "GET", "http://weather.livedoor.com/forecast/webservice/json/v1?city=130010");
 
+  request.setDebug(true); // Modo debugger        
+
   try (ResponseBody response = request.execute()) {
     return response.string();
   }
