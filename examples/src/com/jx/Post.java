@@ -14,7 +14,9 @@ public class Post {
     
     Request request = new Request(
             "POST", "http://127.0.0.1/test.php", body);
-
+ 
+    request.setDebug(true);
+    
     try (ResponseBody response = request.execute()) {
       return response.string(request.getCharset());
     }

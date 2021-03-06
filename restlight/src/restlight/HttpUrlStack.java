@@ -36,7 +36,8 @@ public class HttpUrlStack implements HttpStack {
    *
    * @throws java.io.IOException
    */
-  public HttpURLConnection open(Request request) throws IOException {  
+  public HttpURLConnection open(Request request) throws IOException {
+    request.d("%s %s", request.getMethod(), request.getUrl());
     URL src = new URL(request.urlParams());
     HttpURLConnection conn = open(src);
     conn.setConnectTimeout(request.getTimeoutMs());
@@ -58,6 +59,7 @@ public class HttpUrlStack implements HttpStack {
   throws IOException {
     Headers headers = request.getHeaders();
     if (headers != null) {
+      request.d("Headers:\n%s", headers);
       for (int i = 0, size = headers.size(); i < size; i++) {
         conn.addRequestProperty(headers.name(i), headers.value(i));
       }
@@ -95,10 +97,12 @@ public class HttpUrlStack implements HttpStack {
   public void writeTo(HttpURLConnection conn, Request request) throws IOException {
     RequestBody requestBody = request.getBody();
     if (requestBody != null) {
+      String contentType = requestBody.contentType(request.getCharset());
+      request.d("Body %s:", contentType);  
+        
       // Setup connection:
       conn.setDoOutput(Boolean.TRUE);
-      conn.addRequestProperty(Headers.CONTENT_TYPE,
-              requestBody.contentType(request.getCharset()));
+      conn.addRequestProperty(Headers.CONTENT_TYPE, contentType);
 
       // Length:
       long contentLength = requestBody.contentLength(request.getCharset());
@@ -108,6 +112,7 @@ public class HttpUrlStack implements HttpStack {
       BufferedOutputStream bos = null;
       try {
         bos = new BufferedOutputStream(conn.getOutputStream());
+        request.d(requestBody);
         requestBody.writeTo(bos, request.getCharset());
       } finally {
         IOUtils.closeQuietly(bos);
@@ -131,6 +136,9 @@ public class HttpUrlStack implements HttpStack {
     response.contentLength = conn.getContentLength();
     response.contentEncoding = conn.getContentEncoding();
     response.contentType = conn.getContentType();
+    request.d("Response:\nHeaders:\n%s\nBody: %s", 
+            response.headers, response.contentType);
+    
     return response;
   }
   
@@ -155,8 +163,8 @@ public class HttpUrlStack implements HttpStack {
    * @param request petición a ejecutar
    *
    * @return el resultado de la petición realizada
-   *
-   * @throws java.lang.Exception
+   * 
+   * @throws java.io.IOException
    */
   @Override public ResponseBody execute(Request request) throws IOException {
     HttpURLConnection conn = null;

@@ -37,6 +37,8 @@ public class Request {
   /** Valida si la request fue cancelada. */
   boolean isCanceled;
 
+  boolean isDebug;
+  
   public Request() {
   }
   
@@ -130,6 +132,13 @@ public class Request {
     this.tag = tag;
   }
 
+  public boolean isDebug() {
+    return isDebug;
+  }
+  public void setDebug(boolean isDebug) {
+    this.isDebug = isDebug;
+  }
+  
   
   public static boolean requiresRequestBody(String method) {
     return method.equals("POST") || method.equals("PUT");
@@ -153,9 +162,19 @@ public class Request {
   }
   
   @Override public String toString() {
-    return "Request{" + "method=" + method + ", url=" + url + ", headers=" 
-            + headers + ", body=" + body + ", tag=" + tag + ", timeoutMs=" + timeoutMs 
-            + ", charset=" + charset + ", isCanceled=" + isCanceled + '}';
+    return "Request@" + hashCode() + " " + method + " " + url + "\nheaders:\n" 
+            + headers + "\nbody: " + body + "\n\ntag=" + tag + ", timeoutMs=" + timeoutMs 
+            + ", charset=" + charset + ", isCanceled=" + isCanceled + "\n---";
+  }
+
+  public void d(String format, Object... args) {
+    if (isDebug) System.out.printf("Request@" + hashCode() + ": " + format + "\n", args);
+  }
+  public void d(RequestBody rb) throws IOException {
+    if (isDebug) {
+      rb.writeTo(System.out, charset);
+      System.out.println("\n");
+    }
   }
   
 
