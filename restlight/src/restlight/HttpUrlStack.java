@@ -136,8 +136,8 @@ public class HttpUrlStack implements HttpStack {
     response.contentLength = conn.getContentLength();
     response.contentEncoding = conn.getContentEncoding();
     response.contentType = conn.getContentType();
-    request.d("Response:\nHeaders:\n%s\nBody: %s", 
-            response.headers, response.contentType);
+    request.d("Response %s:\nHeaders:\n%s\nBody: %s", 
+            response.code, response.headers, response.contentType);
     
     return response;
   }
